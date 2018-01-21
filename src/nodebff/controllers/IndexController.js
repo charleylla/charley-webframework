@@ -7,7 +7,7 @@ class IndexController{
     index(){
         return async(ctx,next) => {
             // ctx.body = await ctx.render("index");
-            ctx.body = 123;
+            ctx.body = "Hello Charley";
         }
     }
 }

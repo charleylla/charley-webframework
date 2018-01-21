@@ -2,7 +2,7 @@ const gulp = require("gulp");
 const del = require("del");
 const rollup = require("gulp-rollup");
 const babel = require("gulp-babel");
-const mutliEntry = require("rollup-plugin-multi-entry");
+const liveReload = require("gulp-livereload");
 /**
  * Gulp 无法获取代码运行时的环境变量
  * 该插件用来对运行时的环境变量进行替换
@@ -24,7 +24,8 @@ gulp.task("compile",()=>{
                 "babel-plugin-transform-es2015-modules-commonjs"
             ]
         }))
-        .pipe(gulp.dest("build/"));
+        .pipe(gulp.dest("build/"))
+        .pipe(liveReload());
 })
 
 // 开发环境构建
@@ -49,6 +50,7 @@ gulp.task("build:prod",["clean","compile"],()=>{
 
 // 自动监控
 gulp.task("autoWatch",()=>{
+    liveReload.listen();
     gulp.watch("src/nodebff/**/*.js",["build:dev"])
 });
 
