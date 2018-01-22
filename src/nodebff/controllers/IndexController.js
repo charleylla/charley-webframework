@@ -1,9 +1,6 @@
 import IndexModel from "../models/IndexModel"
 
 class IndexController{
-    constructor(ctx){
-
-    }
     index(){
         const indexModel = new IndexModel();
         return async(ctx,next) => {
