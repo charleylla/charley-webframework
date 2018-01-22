@@ -13,11 +13,24 @@ const isDevelopment = (env === "dev");
 
 // build 文件夹清理
 gulp.task("clean",()=>{
-    del(["build/**/*"])
+    del(["build/"])
 })
 
-gulp.task("compile",()=>{
-    gulp.src("src/nodebff/**/*.js")
+// 复制 Views 文件夹
+gulp.task("copyViews",()=>{
+    setTimeout(()=>{
+        gulp.src("src/nodebff/views/**/*")
+            .pipe(gulp.dest("build/views"));
+        
+        gulp.src("src/nodebff/assets/**/*")
+            .pipe(gulp.dest("build/assets"))
+    },100)
+})
+
+// 编译
+gulp.task("compile",["clean"],()=>{
+    setTimeout(()=>{
+        gulp.src("src/nodebff/**/*.js")
         .pipe(babel({
             babelrc:false,
             plugins:[
@@ -26,27 +39,14 @@ gulp.task("compile",()=>{
         }))
         .pipe(gulp.dest("build/"))
         .pipe(liveReload());
+    },100)
 })
 
 // 开发环境构建
-gulp.task("build:dev",["clean","compile"]);
+gulp.task("build:dev",["compile","copyViews"]);
 
 // 生产环境构建
-gulp.task("build:prod",["clean","compile"],()=>{
-    // gulp.src("src/**/*.js")
-    //     .pipe(rollup({
-    //         input:"src/**/*.js",
-    //         output:{
-    //             format:"cjs"
-    //         },
-    //         plugins:[
-    //             replace({
-    //                 "process.env.NODE_ENV": JSON.stringify(env)
-    //             })
-    //         ]
-    //     }))
-    //     .pipe(gulp.dest("build"))
-});
+gulp.task("build:prod",["compile","copyViews"]);
 
 // 自动监控
 gulp.task("autoWatch",()=>{

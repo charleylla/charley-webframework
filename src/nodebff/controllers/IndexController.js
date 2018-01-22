@@ -1,13 +1,16 @@
-// import IndexModel from "../models/IndexModel"
+import IndexModel from "../models/IndexModel"
 
 class IndexController{
     constructor(ctx){
 
     }
     index(){
+        const indexModel = new IndexModel();
         return async(ctx,next) => {
-            // ctx.body = await ctx.render("index");
-            ctx.body = "Hello Charley";
+            const data = await indexModel.getIndexData();
+            ctx.body = await ctx.render("index",{
+                text:data
+            });
         }
     }
 }
