@@ -27,7 +27,14 @@ gulp.task("copyViews",()=>{
     },100)
 })
 
-// 代码清洗
+/**
+ * 代码清洗
+ * 注：这里只对 env.js 进行了代码清洗，原因如下：
+ * 1. rollup 对多入口文件打包的支持性不好
+ * 2. rollup 和 babel 打包的机制不同，放在一起容易出问题
+ * 
+ * env.js 中一般放和热更新相关的代码
+ */
 gulp.task("codeClean",()=>{
     setTimeout(()=>{
         gulp.src("src/nodebff/config/env.js")
@@ -61,8 +68,6 @@ gulp.task("compile",["clean","codeClean"],()=>{
             .pipe(liveReload());
     },100)
 })
-
-
 
 // 开发环境构建
 gulp.task("build:dev",["compile","copyViews"]);
