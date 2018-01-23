@@ -27,23 +27,6 @@ gulp.task("copyViews",()=>{
     },100)
 })
 
-// 编译
-gulp.task("compile",["clean"],()=>{
-    setTimeout(()=>{
-        gulp.src("src/nodebff/**/*.js")
-        .pipe(babel({
-            babelrc:false,
-            ignore:"src/nodebff/config/env.js",
-            plugins:[
-                "babel-plugin-transform-es2015-modules-commonjs",
-                "transform-decorators-legacy"
-            ]
-        }))
-        .pipe(gulp.dest("build/"))
-        .pipe(liveReload());
-    },100)
-})
-
 // 代码清洗
 gulp.task("codeClean",()=>{
     setTimeout(()=>{
@@ -63,11 +46,30 @@ gulp.task("codeClean",()=>{
     },100)
 })
 
+// 编译
+gulp.task("compile",["clean","codeClean"],()=>{
+    setTimeout(()=>{
+        gulp.src(["src/nodebff/**/*.js","!src/nodebff/config/env.js"])
+            .pipe(babel({
+                babelrc:false,
+                plugins:[
+                    "babel-plugin-transform-es2015-modules-commonjs",
+                    "transform-decorators-legacy"
+                ]
+            }))
+            .pipe(gulp.dest("build/"))
+            .pipe(liveReload());
+    },100)
+})
+
+
+
 // 开发环境构建
 gulp.task("build:dev",["compile","copyViews"]);
 
 // 生产环境构建
-gulp.task("build:prod",["compile","copyViews","codeClean"]);
+gulp.task("build:prod",["compile","copyViews"]);
+// gulp.task("build:prod",["codeClean"]);
 
 // 自动监控
 gulp.task("autoWatch",()=>{
