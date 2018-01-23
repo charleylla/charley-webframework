@@ -9,7 +9,7 @@ nodebff
     ├─controllers           —— Controller 层
     ├─core                  —— 核心文件
     ├─middlewares           —— 中间件
-    ├─po                    —— Model 层
+    ├─po                    —— 持久层
     ├─services              —— Service 层
     └─views                 —— View 层
         └─layout

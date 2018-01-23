@@ -15,13 +15,13 @@ class ErrorHandler {
         this.logger.error("资源不存在~")
     }
 
-    async handleServerError(ctx,statusCode){
+    async handleServerError(ctx,statusCode,err){
         if(!statusCode.toString().startsWith(5)) return;
         ctx.status = statusCode;
         ctx.body = await ctx.render("error",{
             msg:"服务器内部错误~"
         });
-        this.logger.error("服务器内部错误~")
+        this.logger.error(err)
     }
         
     error(){
@@ -35,7 +35,7 @@ class ErrorHandler {
                 console.log("middleware-1")
                 await next();
             }catch(err){
-                this.handleServerError(ctx,status)
+                this.handleServerError(ctx,status,err)
             }
         });
     }    

@@ -1,4 +1,4 @@
-import { createContainer,Lifetime } from "awilix";
+import { createContainer,Lifetime,InjectionMode  } from "awilix";
 import { scopePerRequest,loadControllers } from "awilix-koa";
 
 export default class CoreDI{

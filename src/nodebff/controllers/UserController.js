@@ -1,5 +1,5 @@
-import { route,GET,POST } from "awilix-koa";
-
+import { route,GET,POST,before } from "awilix-koa";
+import Authenticate from "../middlewares/Authenticate";
 @route("/user")
 class UserController{
     constructor({userService}){
@@ -9,10 +9,11 @@ class UserController{
 
     @route("/:id")
     @GET()
-    async getUser(ctx){
-        const data = await this.userService.getUser(ctx.params.id)
+    @before([Authenticate()])
+    async getUser(ctx,next){
         console.log("middleware-2")
-        ctx.body = await ctx.render("index.html",{
+        const data = await this.userService.getUser(ctx.params.id)
+        ctx.body = await ctx.render("index",{
             text:data
         });
     }
