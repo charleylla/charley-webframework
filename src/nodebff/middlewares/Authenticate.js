@@ -1,10 +1,10 @@
 export default function Authenticate(){
-    return (ctx,next) => {
+    return async (ctx,next) => {
         const { id } = ctx.params;
         if(id % 2){
-            ctx.redirect("http://www.baidu.com")
+            ctx.redirect("/")
             return;
         }
-        return next()
+        await next()
     }
 }
