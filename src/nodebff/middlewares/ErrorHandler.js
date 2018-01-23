@@ -5,34 +5,48 @@ class ErrorHandler {
         this.error();
     }
 
-    async handleClientError(ctx,stausCode){
-        ctx.status = stausCode;
+    async handleClientError(ctx,statusCode){
+        console.log("middleware-3",statusCode)
+        if(!statusCode.toString().startsWith(4)) return;
+        ctx.status = statusCode;
         ctx.body = await ctx.render("error",{
             msg:"资源不存在~"
         });
         this.logger.error("资源不存在~")
     }
 
-    async handleServerError(ctx,stausCode){
-        ctx.status = stausCode;
+    async handleServerError(ctx,statusCode){
+        if(!statusCode.toString().startsWith(5)) return;
+        ctx.status = statusCode;
         ctx.body = await ctx.render("error",{
             msg:"服务器内部错误~"
         });
         this.logger.error("服务器内部错误~")
     }
         
-
     error(){
+        this.serverErrorMiddware();
+        this.clientErrorMiddware();
+    }
+    serverErrorMiddware(){
         this.app.use(async (ctx,next) => {
             const { status } = ctx;
             try{
+                console.log("middleware-1")
                 await next();
-                this.handleClientError(ctx,status)
             }catch(err){
                 this.handleServerError(ctx,status)
             }
         });
     }    
+
+    clientErrorMiddware(){
+        this.app.use(async (ctx,next) => {
+            await next();
+            const { status } = ctx;
+            this.handleClientError(ctx,status)
+        });
+    }   
 }
 
 export default ErrorHandler;

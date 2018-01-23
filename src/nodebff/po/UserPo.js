@@ -1,13 +1,13 @@
-class IndexModel{
-    getIndexData(){
+class UserPo{
+    getUser(id){
         const resList = ["NANA","CHARLEY","MIKE","JERRY"]
         return new Promise(res => {
             setTimeout(() => {
-                const data = resList[Math.floor(Math.random()*resList.length)]
+                const data = resList[id] || "游客"
                 res(`Hello ${data}`);
             }, 1000);
         })
     }
 }
 
-export default IndexModel;
+export default UserPo;

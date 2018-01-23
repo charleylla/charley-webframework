@@ -34,7 +34,8 @@ gulp.task("compile",["clean"],()=>{
         .pipe(babel({
             babelrc:false,
             plugins:[
-                "babel-plugin-transform-es2015-modules-commonjs"
+                "babel-plugin-transform-es2015-modules-commonjs",
+                "transform-decorators-legacy"
             ]
         }))
         .pipe(gulp.dest("build/"))
