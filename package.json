@@ -6,8 +6,9 @@
   "scripts": {
     "start": "cross-env NODE_ENV=dev nodemon nodebff/src/app --exec babel-node",
     "build": "cross-env NODE_ENV=prod rimraf nodebff/dist && babel nodebff/src -d nodebff/dist",
-    "serve": "node nodebff/dist/app",
-    "test": "mocha nodebff/test -t 5000"
+    "serve": "cross-env NODE_ENV=prod node nodebff/dist/app",
+    "test:dev": "cross-env NODE_ENV=dev mocha nodebff/test -t 5000",
+    "test:prod": "cross-env NODE_ENV=prod mocha nodebff/test -t 5000"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

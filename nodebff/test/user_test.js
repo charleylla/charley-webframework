@@ -3,7 +3,7 @@ const
     expect = require("chai").expect,
     supertest = require("supertest"),
     PORT = require("../src/config").PORT,
-    api = supertest(`localhost:3000`);
+    api = supertest(`localhost:${PORT}`);
 
 describe("/User/:id",() => {
     it("/User/:id should return a 200 response",(done) => {
