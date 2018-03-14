@@ -1,0 +1,9 @@
+{
+    "name":"node-app",
+    "script":"app.js",
+    "watch":true,
+    "ignore-watch":"node_modules",
+    "instances":"max",
+    "exec_mode":"cluster",
+    "out_file":"/dev/null"
+}
